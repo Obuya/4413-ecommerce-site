@@ -1,6 +1,3 @@
-# 4413-ecommerce
-E-commerce project for 4413 
-
 ## Setup
 
 Run `docker-compose up --build` to build the image and start the container.  
