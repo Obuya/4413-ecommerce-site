@@ -3,6 +3,8 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import { useAuth } from "./contexts/AuthContext"
 
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
+
 export default function SignUp(){
   const { user, setUser } = useAuth()
 
@@ -14,9 +16,15 @@ export default function SignUp(){
 
   useEffect(() => {
     // TODO redirect if user already signed in 
-    //if (user) router.push('/')
+    if (user){
+      const { from } = router.query
+      if (from) {
+        router.push(from)
+      } else {
+        router.push('/profile')
+      }
+    } 
   }, [user])
-
 
   const handleSignUp = async (event) => {
     event.preventDefault()
@@ -27,8 +35,11 @@ export default function SignUp(){
     }
     // TODO SIGN UP REQUEST
     try {
-      const response = await fetch('', {
+      const response = await fetch(`${SERVER_URL}/v1/auth/register`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           username: username,
           password: password
@@ -40,7 +51,8 @@ export default function SignUp(){
         setErrorMessage(data.message)
         return
       }
-      setUser(data)
+      sessionStorage.setItem('jwt', data.token)
+      setUser(data.user)
     } catch (error){
       console.log(error)
       setErrorMessage('')
@@ -76,7 +88,7 @@ export default function SignUp(){
         </form>
         <div className="px-5 text-center">
           If already a user {' '}
-          <Link href={'/signin'}>
+          <Link href={'/login'}>
             <button className="text-blue-500 font-medium">
                 sign in
             </button>

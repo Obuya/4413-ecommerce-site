@@ -1,4 +1,5 @@
 import express from 'express'
+import { checkJwt } from '../utils/checkJwt'
 const controller = require('../controllers/auth.controller')
 
 const router = express.Router()
@@ -16,5 +17,12 @@ router.post('/register', controller.registerUser)
  * @description Login a returning user
  */
 router.post('/login', controller.verifyUserLogin)
+
+/**
+ * @route /v1/auth/verify-token
+ * @request GET
+ * @description Verify a users jwt token
+ */
+router.get('/verify-token', checkJwt, controller.verifyToken)
 
 module.exports = router

@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import UserModel from '../../db/models/user'
 import bcrypt, { hash } from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import { generateAuthToken, verifyAuthToken } from '../utils/auth'
+import { JwtPayload } from 'jsonwebtoken'
+
 
 const SALT_ROUNDS = 10
-const TOKEN_SECRET = process.env.TOKEN_SECRET!
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body
@@ -15,16 +16,18 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
             })
         }
 
-        const salt = await bcrypt.genSalt(10)
+        const salt = await bcrypt.genSalt(SALT_ROUNDS)
         const hash = await bcrypt.hash(password, salt)
         const newUser = new UserModel({
             username: username,
             hash: hash
         })
         await newUser.save()
+        const token = generateAuthToken(newUser.id, username, 'user')
         return res.status(201).json({
             message: 'Successfully created',
-            user: {id: newUser.id}
+            user: {id: newUser.id},
+            token: token
         })
     } catch(error){
         console.log(error)
@@ -53,23 +56,16 @@ const verifyUserLogin = async (req: Request, res: Response) => {
                 message: 'Error: invalid username or password'
             })
         }
-
         const compare = await bcrypt.compare(password, user.hash)
         if (!compare){
             return res.status(404).json({
                 message: 'Error: invalid username or password'
             })
         }
-        // TODO potentially add others roles here for admin/user etc.
-       const token = jwt.sign({
-            id: user.id,
-            username: user.username,
-            type: 'user'
-       }, TOKEN_SECRET, {expiresIn: '2h'})
-
+        const token = generateAuthToken(user.id, username, 'user')
        // remove hash from user to safely return user object
        const { hash, ...userWithoutHash } = user.toObject()
-
+       
        return res.status(200).json({
         message: 'Succesfully logged in',
         token: token,
@@ -83,7 +79,25 @@ const verifyUserLogin = async (req: Request, res: Response) => {
     }
 }
 
+const verifyToken = async (req: Request, res: Response) => {
+    const token = req.token!
+    try {
+        const verify_token = verifyAuthToken(token) as JwtPayload
+        console.log(verify_token)
+        return res.status(200).json({
+            message: 'Successfully verified token',
+            token: token,
+            user: verify_token
+        })
+    } catch (error){
+        return res.status(500).json({
+            message: 'Error: Internal Server Error'
+        })
+    }
+}
+
 module.exports = {
     registerUser,
-    verifyUserLogin
+    verifyUserLogin,
+    verifyToken
 }
