@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import cors from 'cors'
 import connectDB from './db/connection'
 const v1 = require('./v1/index')
+//const errorController = require('./utils/errorController')
 
 dotenv.config()
 
@@ -16,6 +17,9 @@ app.options('*', cors())
 // api versioning
 app.use('/v1', v1)
 
+
+// TODO error handling
+//app.use(errorController)
 
 // establish db connection before starting server
 connectDB().then(async () => {

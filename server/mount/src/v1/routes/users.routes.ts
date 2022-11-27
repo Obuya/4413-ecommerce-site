@@ -17,12 +17,4 @@ router.get('/', controller.getUsers)
  */
 router.get('/:id', controller.getOneUser)
 
-/**
- * @route /v1/products/
- * @request POST
- * @description Create product
- */
-router.get('/', controller.createUser)
-
-
 module.exports = router
