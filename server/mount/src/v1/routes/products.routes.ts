@@ -10,7 +10,7 @@ const router = express.Router()
  * @request GET
  * @description Get all products information
  */
-// router.get('/', controller.getProducts)
+router.get('/', controller.getProducts)
 
 /**
  * @route /v1/products/:id

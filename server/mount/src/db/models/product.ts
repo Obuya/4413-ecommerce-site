@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose'
-import { type } from 'os'
 
 // TODO
 
