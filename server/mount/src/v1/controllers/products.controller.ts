@@ -2,9 +2,17 @@ import { Request, Response } from 'express'
 import ProductModel from '../../db/models/product'
 
 const getProducts = async (req: Request, res: Response) => {
+    const { type, brand } = req.query
     try {
         const products = await ProductModel.find()
-        return res.status(200).json(products)
+        let filterProducts = products
+        if (type){
+            filterProducts = filterProducts.filter(product => product.details.type === type)
+        }
+        if (brand){
+            filterProducts = filterProducts.filter(product => product.details.brand === brand)
+        }
+        return res.status(200).json(filterProducts)
     } catch (error){
         console.log(error)
         return res.status(500).json({
