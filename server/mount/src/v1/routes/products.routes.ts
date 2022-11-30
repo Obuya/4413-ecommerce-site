@@ -1,4 +1,6 @@
 import express from 'express'
+import { authenticateJwt } from '../utils/authenticateJwt'
+import { checkJwt } from '../utils/checkJwt'
 const controller = require('../controllers/products.controller')
 
 const router = express.Router()
@@ -8,7 +10,7 @@ const router = express.Router()
  * @request GET
  * @description Get all products information
  */
-router.get('/', controller.getProducts)
+// router.get('/', controller.getProducts)
 
 /**
  * @route /v1/products/:id
@@ -22,7 +24,7 @@ router.get('/:id', controller.getOneProduct)
  * @request POST
  * @description Create product
  */
-router.get('/', controller.createProduct)
+router.post('/', checkJwt, authenticateJwt, controller.createProduct)
 
 
 module.exports = router

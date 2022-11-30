@@ -1,5 +1,6 @@
 import { Response, NextFunction, Request } from "express"
 
+// Checks to see if Jwt exists
 export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
   const authorization = req.get('Authorization')
   if (!authorization){

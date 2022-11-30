@@ -1,20 +1,15 @@
 import express from 'express'
+import { authenticateJwt } from '../utils/authenticateJwt'
+import { checkJwt } from '../utils/checkJwt'
 const controller = require('../controllers/users.controller')
 
 const router = express.Router()
 
 /**
- * @route /v1/products/
+ * @route /v1/users/
  * @request GET
- * @description Get all products information
+ * @description Get specific user information (must be correct authed account)
  */
-router.get('/', controller.getUsers)
-
-/**
- * @route /v1/products/:id
- * @request GET
- * @description Get specific products information
- */
-router.get('/:id', controller.getOneUser)
+router.get('/', checkJwt, authenticateJwt, controller.getOneUser)
 
 module.exports = router
