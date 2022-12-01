@@ -5,8 +5,7 @@ export const AuthContext = createContext()
 
 export const useAuth = () => useContext(AuthContext)
 
-
-export const AuthProvider = ({children}) => {
+const AuthProvider = ({children}) => {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -46,3 +45,5 @@ export const AuthProvider = ({children}) => {
         </AuthContext.Provider>
     )
 }
+
+export default AuthProvider

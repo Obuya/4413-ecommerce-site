@@ -1,8 +1,6 @@
 import '../styles/globals.css'
 import { createContext, useEffect, useState } from 'react'
-import { AuthProvider, useAuth } from './contexts/AuthContext'
-
-
+import AuthProvider from './contexts/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   // useEffect(() => {
