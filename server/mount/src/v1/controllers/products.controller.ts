@@ -72,8 +72,42 @@ const createProduct = async (req: Request, res: Response) => {
     }
 }
 
+const createReview = async (req: Request, res: Response) => {
+    const { id } = req.params
+    const { text, score } = req.body
+    const user = req.user
+    try {
+        if (!text || !score || score < 1 || score > 5){
+            return res.status(400).json({
+                message: 'Error: Missing review text or Reviews score unable to add review'
+            })
+        }
+
+        const updateProduct = await ProductModel.findByIdAndUpdate(id, {
+            $push: {
+                reviews: {
+                    text,
+                    score,
+                    reviewDate: new Date(),
+                    reviewerId: user.id
+                }
+            }
+        })
+
+        return res.status(201).json({
+            message: `Successfully created review for product ${id}`,
+        })
+    } catch (error){
+        console.log(error)
+        return res.status(500).json({
+            message: 'Error: Internal Server Error'
+        })
+    }
+}
+
 module.exports = {
     getProducts,
     getOneProduct,
-    createProduct
+    createProduct,
+    createReview
 }
