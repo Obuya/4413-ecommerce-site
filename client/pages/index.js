@@ -95,7 +95,7 @@ export default function Home() {
               {
                 products 
                   ? (
-                   products.map(product => <ProductDisplay {...product} />)
+                   products.map(product => <ProductDisplay key={product._id} {...product} />)
                   )  // products
                   : ""  // skelton here
               }
