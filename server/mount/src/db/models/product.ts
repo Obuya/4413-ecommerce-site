@@ -1,22 +1,24 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, ObjectId, Mongoose } from 'mongoose'
 
 // TODO
 
-type ReviewScore = '1' | '2' | '3' | '4' | '5' | 'NA'
+type ReviewScore = 1 | 2 | 3 | 4 | 5 | 'NA'
 export interface Review {
     text: string,
     score: ReviewScore,
-    reviewDate: string
+    reviewDate: string,
+    reviewerId: ObjectId
 }
 
 export const reviewSchema = new Schema<Review>({
     text: String,
     score: {
         type: String,
-        enum: ['1', '2', '3', '4', '5', 'NA'],
+        enum: [1, 2, 3, 4, 5, 'NA'],
         default: 'NA'
     },
-    reviewDate: String
+    reviewDate: String,
+    reviewerId: Schema.Types.ObjectId
 })
 
 interface ProductDetails {
@@ -30,7 +32,8 @@ export interface Product {
     reviews: Review[],
     description: string,
     details: ProductDetails,
-    sellerName: string
+    sellerName: string,
+    name: string
 }
 
 export const productDetails = new Schema<ProductDetails>({
@@ -44,7 +47,8 @@ export const productSchema = new Schema<Product>({
     reviews: [reviewSchema],
     description: String,
     details: productDetails,
-    sellerName: String
+    sellerName: String,
+    name: String
 })
 
 const ProductModel = model<Product>('Product', productSchema)

@@ -60,25 +60,34 @@ export default function SignUp(){
   }
 
   return (
-    <div className="flex justify-center">
-      <div>
+    <div className="flex justify-center mt-40">
+      <div className="border px-20 py-10 rounded-lg">
+        <h1 className="text-center font-semibold text-5xl text-blue-300">Sign Up</h1>
         <form>
-            <div className='flex flex-col p-5'>
+            <div className='flex flex-col p-5 gap-y-2'>
             <input 
               placeholder='username' 
-              className='border' 
+              className='border rounded-lg px-2 py-1' 
               onChange={(event) => setUsername(event.target.value)}
               type={"text"}
               maxLength={50}
             />
             <input 
               placeholder='password' 
-              className='border' 
+              className='border rounded-lg px-2 py-1' 
               onChange={(event) => setPassword(event.target.value)}
               type={"password"}
               maxLength={120}
             />
-            <button onClick={(event) => handleSignUp(event)} className='border'>sign up</button>
+            <div className="flex justify-center">
+              <button 
+                onClick={(event) => handleSignUp(event)} 
+                className='border rounded-lg px-2 bg-blue-300 text-white font-medium'
+              >
+                SIGN UP
+              </button>
+            </div>
+          
             </div>
             {errorMessage && (
               <div className="font-medium text-red-500 text-center">

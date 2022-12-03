@@ -26,5 +26,12 @@ router.get('/:id', controller.getOneProduct)
  */
 router.post('/', checkJwt, authenticateJwt, controller.createProduct)
 
+/**
+ * @route /v1/products/:id/reviews
+ * @request POST
+ * @description Create product review
+ */
+router.post('/:id/reviews', checkJwt, authenticateJwt, controller.createReview)
+
 
 module.exports = router
