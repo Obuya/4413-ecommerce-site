@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import { useAuth } from "./contexts/AuthContext"
+import { useAuth } from "../contexts/AuthContext"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 

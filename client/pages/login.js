@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import { useRouter } from "next/router"
-import { AuthContext } from "./contexts/AuthContext"
+import { AuthContext } from "../contexts/AuthContext"
+import Link from 'next/link'
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -46,7 +47,14 @@ export default function Login(){
   }
 
     useEffect(() => {
-        if (user) router.push('/')
+      if (user){
+        const { from } = router.query
+        if (from) {
+          router.push(from)
+        } else {
+          router.push('/')
+        }
+      } 
     }, [user])
 
     return (
@@ -86,6 +94,14 @@ export default function Login(){
                   </div>
                 )}
             </form>
+              <div className="px-5 text-center">
+              If you do not already an account {' '}
+              <Link href={'/signup'}>
+                <button className="text-blue-500 font-medium">
+                    sign up
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
     </div>
