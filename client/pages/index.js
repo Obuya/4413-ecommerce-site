@@ -13,7 +13,6 @@ export default function Home() {
   const router = useRouter()
 
   const [products, setProducts] = useState()
-  const [sortAscending, setSortAscending] = useState(true)
 
   useEffect(() => {
     const getProducts = async () => {
@@ -23,6 +22,16 @@ export default function Home() {
     }
     getProducts()
   }, [])
+
+  const sortProducts = (option='ASC') => {
+    let sortedProducts = [...products]
+    if (option === 'ASC'){
+      sortedProducts = sortedProducts.sort((a,b) => a.price - b.price)
+    } else if (option === 'DSC') {
+      sortedProducts = sortedProducts.sort((a,b) => b.price - a.price)
+    }
+    setProducts(sortedProducts)
+  }
 
   return (
     <div>
@@ -41,12 +50,12 @@ export default function Home() {
               <h1 className='text-center font-bold mb-2'>Sort</h1>
               <form>
                 <div className='flex gap-x-2'>
-                  <input name="price" type={"radio"} onClick={() => setSortAscending(true)} />
+                  <input name="price" type={"radio"} onClick={() => sortProducts('ASC')} />
                   <label className='font-medium'>Price Low to High</label>
                 </div>
                 <div className='flex gap-x-2'>
-                  <input name="price" type={"radio"} />
-                  <label className='font-medium' onClick={() => setSortAscending(false)}>Price High to Low</label>
+                  <input name="price" type={"radio"} onClick={() => sortProducts('DSC')} />
+                  <label className='font-medium'>Price High to Low</label>
                 </div>
                 {/* <div className='flex gap-x-2'>
                   <input name="price" type={"radio"} />
