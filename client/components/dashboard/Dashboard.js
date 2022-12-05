@@ -17,9 +17,9 @@ function Dashboard({products, setProducts}){
   }
 
   return (
-    <div className='grid grid-cols-5'>
+    <div className='grid grid-cols-5 bg-gray-100'>
       <div className='col-span-1 h-full'>
-        <div className='m-5 bg-white rounded-lg p-5'>
+        <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Sort</h1>
           <form>
             <div className='flex gap-x-2'>
@@ -36,7 +36,7 @@ function Dashboard({products, setProducts}){
             </div> */}
           </form>
         </div>
-        <div className='m-5 bg-white rounded-lg p-5'>
+        <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Categories</h1>
           <form>
             <div className='flex gap-x-2'>
@@ -59,7 +59,7 @@ function Dashboard({products, setProducts}){
               }
           </form>
         </div>
-        <div className='m-5 bg-white rounded-lg p-5'>
+        <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Brands</h1>
           <form>
             {
@@ -116,7 +116,7 @@ function ProductDisplay(product){
 
   return (
     <Link href={`/products/${_id}`}>
-      <div key={_id} className='border rounded-lg px-5'>
+      <div key={_id} className='border rounded-lg px-5 bg-white'>
         <div className='h-40 w-full bg-gray-200 mb-5 mt-10'>
           {/** DISPLAY IMAGE WILL GO HERE */}
           <img />

@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { useAuth } from "../contexts/AuthContext"
+import Navbar from "../components/navigation/Navbar"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -60,48 +61,51 @@ export default function SignUp(){
   }
 
   return (
-    <div className="flex justify-center mt-40">
-      <div className="border px-20 py-10 rounded-lg">
-        <h1 className="text-center font-semibold text-5xl text-blue-300">Sign Up</h1>
-        <form>
-            <div className='flex flex-col p-5 gap-y-2'>
-            <input 
-              placeholder='username' 
-              className='border rounded-lg px-2 py-1' 
-              onChange={(event) => setUsername(event.target.value)}
-              type={"text"}
-              maxLength={50}
-            />
-            <input 
-              placeholder='password' 
-              className='border rounded-lg px-2 py-1' 
-              onChange={(event) => setPassword(event.target.value)}
-              type={"password"}
-              maxLength={120}
-            />
-            <div className="flex justify-center">
-              <button 
-                onClick={(event) => handleSignUp(event)} 
-                className='border rounded-lg px-2 bg-blue-300 text-white font-medium'
-              >
-                SIGN UP
-              </button>
-            </div>
-          
-            </div>
-            {errorMessage && (
-              <div className="font-medium text-red-500 text-center">
-                  {errorMessage}
+    <div className="h-screen bg-gradient-to-r transition-all duration-500 from-pink-500 to-yellow-500">
+      <Navbar search={false} loginAndCart={false} />
+      <div className="flex justify-center pt-40">
+        <div className="border px-20 py-10 rounded-lg bg-white">
+          <h1 className="text-center font-semibold text-5xl text-orange-500">Sign Up</h1>
+          <form>
+              <div className='flex flex-col p-5 gap-y-2'>
+              <input 
+                placeholder='username' 
+                className='border rounded-lg px-2 py-1' 
+                onChange={(event) => setUsername(event.target.value)}
+                type={"text"}
+                maxLength={50}
+              />
+              <input 
+                placeholder='password' 
+                className='border rounded-lg px-2 py-1' 
+                onChange={(event) => setPassword(event.target.value)}
+                type={"password"}
+                maxLength={120}
+              />
+              <div className="flex justify-center">
+                <button 
+                  onClick={(event) => handleSignUp(event)} 
+                  className='border rounded-lg px-2 bg-orange-500 text-white font-medium'
+                >
+                  SIGN UP
+                </button>
               </div>
-            )}
-        </form>
-        <div className="px-5 text-center">
-          If already a user {' '}
-          <Link href={'/login'}>
-            <button className="text-blue-500 font-medium">
-                sign in
-            </button>
-          </Link>
+            
+              </div>
+              {errorMessage && (
+                <div className="font-medium text-red-500 text-center">
+                    {errorMessage}
+                </div>
+              )}
+          </form>
+          <div className="px-5 text-center">
+            If already a user {' '}
+            <Link href={'/login'}>
+              <button className="text-pink-500 font-medium">
+                  sign in
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
