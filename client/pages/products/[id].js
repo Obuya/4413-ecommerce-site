@@ -93,7 +93,7 @@ function Product (){
       </div>
 
       <div className='xl:mx-20 mx:10'>
-        {product.reviews.map(review => <div>REVIEW</div>)}
+        {product.reviews.map(review => <div key={review._id}>REVIEW</div>)}
       </div>
     </div>
   )
