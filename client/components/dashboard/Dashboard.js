@@ -17,7 +17,7 @@ function Dashboard({products, setProducts}){
   }
 
   return (
-    <div className='grid grid-cols-5 bg-gray-100'>
+    <div className='grid grid-cols-5 bg-gray-100 h-full'>
       <div className='col-span-1 h-full'>
         <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Sort</h1>

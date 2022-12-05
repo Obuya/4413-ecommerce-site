@@ -28,28 +28,28 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div className='h-full'>
       <Head>
         <title>4413 Ecommerce</title>
         <meta name="description" content="4413 e-commerce app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className='h-screen'>
         <Navbar />
 
         {products 
           ? <Dashboard products={products} setProducts={setProducts} />
           : ""
         }
-
+{/* 
         <div className='text-black'>
           Main screen
         </div>
 
         <Link href={'/signup'}>
           Sign up
-        </Link>
+        </Link> */}
       </main>
       <footer>
       </footer>
