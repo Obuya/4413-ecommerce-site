@@ -8,7 +8,14 @@ import { JwtPayload } from 'jsonwebtoken'
 const SALT_ROUNDS = 10
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, password } = req.body
+    const { 
+        username, 
+        password, 
+        address,
+        city,
+        country,
+        postalcode
+    } = req.body
     try {
         if (!username || !password) {
             return res.status(400).json({
@@ -20,7 +27,11 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
         const hash = await bcrypt.hash(password, salt)
         const newUser = new UserModel({
             username: username,
-            hash: hash
+            hash: hash,
+            address,
+            city,
+            postalcode,
+            country
         })
         await newUser.save()
         const token = generateAuthToken(newUser.id, username, 'user')

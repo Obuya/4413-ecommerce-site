@@ -6,14 +6,22 @@ export interface User {
     username: string,
     hash: string,
     reviews: Review[],
-    purchases: Product[]
+    purchases: Product[],
+    address?: string,
+    city?: string,
+    country?: string
+    postalcode?: string
 }
 
 const userSchema = new Schema<User>({
     username: { unique: true, type: String, maxlength: 50},
     hash: String,
     reviews: [reviewSchema],
-    purchases: [productSchema]
+    purchases: [productSchema],
+    address: String,
+    city: String,
+    country: String,
+    postalcode: String
 })
 
 const UserModel = model<User>('User', userSchema)
