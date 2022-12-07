@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react"
 import { useRouter } from "next/router"
-import { AuthContext } from "./contexts/AuthContext"
+import { AuthContext } from "../contexts/AuthContext"
+import Link from 'next/link'
+import Navbar from "../components/navigation/Navbar"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -46,14 +48,22 @@ export default function Login(){
   }
 
     useEffect(() => {
-        if (user) router.push('/')
+      if (user){
+        const { from } = router.query
+        if (from) {
+          router.push(from)
+        } else {
+          router.push('/')
+        }
+      } 
     }, [user])
 
     return (
-      <div>
-        <div className="flex justify-center mt-40">
-          <div className="border px-20 py-10 rounded-lg">
-            <h1 className="text-center font-semibold text-5xl text-blue-300">Login</h1>
+      <div className="h-screen bg-gradient-to-r transition-all duration-500 from-pink-500 to-yellow-500">
+        <Navbar search={false} loginAndCart={false} />
+        <div className="flex justify-center pt-40">
+          <div className="border px-20 py-10 rounded-lg bg-white">
+            <h1 className="text-center font-semibold text-5xl text-orange-500">Login</h1>
             <form>
                 <div className='flex flex-col p-5 gap-y-2'>
                 <input 
@@ -73,7 +83,7 @@ export default function Login(){
                 <div className="flex justify-center">
                   <button 
                     onClick={(event) => handleLogin(event)} 
-                    className='border rounded-lg px-2 bg-blue-300 text-white font-medium'
+                    className='border rounded-lg px-2 bg-orange-500 text-white font-medium'
                   >
                     LOGIN
                   </button>
@@ -86,6 +96,14 @@ export default function Login(){
                   </div>
                 )}
             </form>
+              <div className="px-5 text-center">
+              If you do not already an account {' '}
+              <Link href={'/signup'}>
+                <button className="text-pink-500 font-medium">
+                    sign up
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
     </div>

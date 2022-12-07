@@ -7,7 +7,8 @@ export interface Review {
     text: string,
     score: ReviewScore,
     reviewDate: string,
-    reviewerId: ObjectId
+    reviewerId: ObjectId,
+    name: string
 }
 
 export const reviewSchema = new Schema<Review>({
@@ -18,7 +19,8 @@ export const reviewSchema = new Schema<Review>({
         default: 'NA'
     },
     reviewDate: String,
-    reviewerId: Schema.Types.ObjectId
+    reviewerId: Schema.Types.ObjectId,
+    name: String
 })
 
 interface ProductDetails {

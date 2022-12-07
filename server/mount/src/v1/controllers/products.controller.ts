@@ -1,8 +1,10 @@
 import { Request, Response } from 'express'
 import ProductModel from '../../db/models/product'
+import UserModel from '../../db/models/user'
 
 const getProducts = async (req: Request, res: Response) => {
     const { type, brand } = req.query
+    console.log('SESSION:', req.session)
     try {
         const products = await ProductModel.find()
         let filterProducts = products
@@ -74,26 +76,34 @@ const createProduct = async (req: Request, res: Response) => {
 
 const createReview = async (req: Request, res: Response) => {
     const { id } = req.params
-    const { text, score } = req.body
-    const user = req.user
+    const { text, score, name } = req.body
     try {
         if (!text || !score || score < 1 || score > 5){
             return res.status(400).json({
                 message: 'Error: Missing review text or Reviews score unable to add review'
             })
         }
-
-        const updateProduct = await ProductModel.findByIdAndUpdate(id, {
+        
+        await ProductModel.findByIdAndUpdate(id, {
             $push: {
                 reviews: {
                     text,
                     score,
                     reviewDate: new Date(),
-                    reviewerId: user.id
+                    name
                 }
             }
         })
 
+        await UserModel.findByIdAndUpdate(id, {
+            $push: {
+                reviews: {
+                    text,
+                    score,
+                    reviewDate: new Date(),
+                }
+            }
+        })
         return res.status(201).json({
             message: `Successfully created review for product ${id}`,
         })

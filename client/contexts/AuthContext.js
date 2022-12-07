@@ -10,11 +10,11 @@ const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(false)
 
   const SignOut = () => {
+    sessionStorage.removeItem('jwt')
     setUser(null)
   }
 
   useEffect(() => {
-    // TODO: if active session with JWT fetch the user and automatically set the user
     const getSession = async () => {
       let token = sessionStorage.getItem('jwt')
       if (!token || token === ''){
@@ -28,7 +28,6 @@ const AuthProvider = ({children}) => {
       })
       if (!response.ok) return
       const data = await response.json()
-      console.log(data)
       sessionStorage.setItem('jwt', data.token)
       setUser(data.user)
     }

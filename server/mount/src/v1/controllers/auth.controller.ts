@@ -24,6 +24,7 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
         })
         await newUser.save()
         const token = generateAuthToken(newUser.id, username, 'user')
+        //req.session.jwt = token
         return res.status(201).json({
             message: 'Successfully created',
             user: {id: newUser.id},
@@ -63,8 +64,10 @@ const verifyUserLogin = async (req: Request, res: Response) => {
             })
         }
         const token = generateAuthToken(user.id, username, 'user')
+        //req.session.jwt = token
        // remove hash from user to safely return user object
        const { hash, ...userWithoutHash } = user.toObject()
+       
        
        return res.status(200).json({
         message: 'Succesfully logged in',
@@ -83,7 +86,7 @@ const verifyToken = async (req: Request, res: Response) => {
     const token = req.token!
     try {
         const verify_token = verifyAuthToken(token) as JwtPayload
-        console.log(verify_token)
+        //req.session.jwt = verify_token
         return res.status(200).json({
             message: 'Successfully verified token',
             token: token,
