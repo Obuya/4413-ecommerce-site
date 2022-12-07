@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from "dotenv"
 import cors from 'cors'
 import connectDB from './db/connection'
+import session from 'express-session'
 const v1 = require('./v1/index')
 //const errorController = require('./utils/errorController')
 
@@ -14,6 +15,12 @@ app.use(express.json())
 app.use(cors())
 app.options('*', cors())
 
+// middleware for creating and storing user sessions
+app.use(session({
+  secret: 'secret_session_secret', // THIS WILL TYPICALLY BE IN THE .env
+  resave: false,
+  saveUninitialized: false,
+}))
 // api versioning
 app.use('/v1', v1)
 
