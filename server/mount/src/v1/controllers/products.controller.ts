@@ -4,9 +4,8 @@ import UserModel from '../../db/models/user'
 
 const getProducts = async (req: Request, res: Response) => {
     const { type, brand } = req.query
-    console.log('SESSION:', req.session)
     try {
-        const products = await ProductModel.find()
+        const products = await ProductModel.find().limit(50)
         let filterProducts = products
         if (type){
             filterProducts = filterProducts.filter(product => product.details.type === type)

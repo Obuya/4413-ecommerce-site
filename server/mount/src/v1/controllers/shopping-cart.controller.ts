@@ -51,6 +51,7 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
         quantity: shopping_cart[itemIndex].quantity + 1
       }
     }
+    
     req.session.shopping_cart = shopping_cart
 
     return res.status(200).json({
