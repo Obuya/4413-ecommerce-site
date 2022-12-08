@@ -46,7 +46,7 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
     }
     // // only add to shopping cart if product does not already exist in cart
     if (!shopping_cart.some(product => product._id === product_id)){
-      shopping_cart.push(product)
+      shopping_cart.push(product.toObject())
     } else {
       const itemIndex = shopping_cart.findIndex(product => product._id === product_id)
       shopping_cart[itemIndex] =  {
