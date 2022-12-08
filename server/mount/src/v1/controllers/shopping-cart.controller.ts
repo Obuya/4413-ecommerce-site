@@ -57,6 +57,7 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
 
     console.log('ADDED CART:', shopping_cart)
     req.session.shopping_cart = shopping_cart
+    console.log('STORED IN SESSION:', req.session.shopping_cart)
 
     return res.status(200).json({
       shopping_cart: shopping_cart
