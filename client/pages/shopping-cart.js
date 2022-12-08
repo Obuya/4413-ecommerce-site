@@ -37,15 +37,36 @@ export default function ShoppingCart(){
 
 function CartQuantites({products}){
   const productsHash = {}
-  console.log(products)
+  const productsQuantity = {}
   for (let i = 0; i < products.length; i++){
-    productsHash[products[i]._id] = productsHash[products[i]._id] + 1 || 1
+    productsQuantity[products[i]._id] = productsQuantity[products[i]._id] + 1 || 1
+    productsHash[products[i]._id] = products[i]
   }
   console.log(productsHash)
-
+  console.log(productsQuantity)
   return (
     <>
-      {products.map(product => <div>{product.name}</div>)}
+      {Object.values(productsHash).map(product => {
+        const quantity = productsQuantity[product._id]
+        return (
+          <CartItem product={product} quantity={quantity} />
+      )})}
     </>
+  )
+}
+
+function CartItem({product, quantity}){
+  const [itemQuantity, setItemQuantity] = useState(quantity)
+  return (
+    <div className="flex justify-between my-5">
+      <div>{product.name}</div>
+      <select name="quantity" id="quantity" value={itemQuantity}>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+      </select>
+    </div>
   )
 }
