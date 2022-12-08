@@ -12,7 +12,7 @@ const app = express()
 
 // middleware and cors options
 app.use(express.json())
-app.use(cors({credentials: true}))
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 app.options('*', cors())
 
 // middleware for creating and storing user sessions
