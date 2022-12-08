@@ -11,6 +11,7 @@ export default function SignUp(){
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   const router = useRouter()
@@ -82,6 +83,13 @@ export default function SignUp(){
                 onChange={(event) => setPassword(event.target.value)}
                 type={"password"}
                 maxLength={120}
+              />
+              <input 
+                placeholder='email' 
+                className='border rounded-lg px-2 py-1' 
+                onChange={(event) => setEmail(event.target.value)}
+                type={"text"}
+                maxLength={50}
               />
               <div className="flex justify-center">
                 <button 
