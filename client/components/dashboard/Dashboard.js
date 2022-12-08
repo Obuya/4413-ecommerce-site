@@ -47,10 +47,10 @@ function Dashboard({products, setProducts}){
               } />
               <label className='font-medium'>All</label>
             </div>
-            {
+            {//categories
               _.uniqBy(products, 'details.type')
                 .map(category => (
-                  <div className='flex gap-x-2' key={category.details.type}> //categories
+                  <div className='flex gap-x-2' key={category.details.type}> 
                     <input name="price" type={"radio"} onClick={() => setFilterCategory(category.details.type)} />
                     <label className='font-medium'>{category.details.type}</label>
                   </div>
@@ -62,10 +62,10 @@ function Dashboard({products, setProducts}){
         <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Brands</h1>
           <form>
-            {
+            {// Brands
               _.uniqBy(products.filter(product => filterCategory && product.details.type === filterCategory), 'details.brand')
                 .map(brand => (
-                  <div className='flex gap-x-2' key={brand.details.brand}> // Brands
+                  <div className='flex gap-x-2' key={brand.details.brand}> 
                     <input name="price" type={"checkbox"} onClick={() => setFilterBrand(brand.details.brand)} />
                     <label className='font-medium'>{brand.details.brand}</label>
                   </div>
