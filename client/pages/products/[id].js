@@ -17,9 +17,7 @@ function Product (){
 
   useEffect(() => {
     const getProductDetails = async () => {
-        const response = await fetch(`${SERVER_URL}/v1/products/${id}`, {
-          credentials: 'include'
-        })
+        const response = await fetch(`${SERVER_URL}/v1/products/${id}`)
         const data = await response.json()
 
         if (!response.ok){
