@@ -28,7 +28,7 @@ export default function ShoppingCart(){
       <div className="m-10 p-10 bg-pink-500">
         {
           shoppingCart.length > 0 ? (
-            <CartQuantites products={shoppingCart} />
+            <CartQuantites products={shoppingCart} setShoppingCart={setShoppingCart} />
           ) : ("")
         }
       </div>
@@ -37,7 +37,7 @@ export default function ShoppingCart(){
 }
 
 
-function CartQuantites({products}){
+function CartQuantites({products, setShoppingCart}){
   const productsHash = {}
   for (let i = 0; i < products.length; i++){
     productsHash[products[i]._id] = products[i]
@@ -47,13 +47,13 @@ function CartQuantites({products}){
       {Object.values(productsHash).map(product => {
         const quantity = product.quantity || 1
         return (
-          <CartItem product={product} quantity={quantity} />
+          <CartItem product={product} quantity={quantity} setShoppingCart={setShoppingCart} />
       )})}
     </>
   )
 }
 
-function CartItem({product, quantity}){
+function CartItem({product, quantity, setShoppingCart}){
   const [itemQuantity, setItemQuantity] = useState(quantity)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -72,7 +72,8 @@ function CartItem({product, quantity}){
      if (!response.ok){
       setErrorMessage(data.message)
     }
-    setItemQuantity(newQuantity)
+    // update shopping cart
+    setShoppingCart(data.shopping_cart)
     setErrorMessage('')
   }
 
