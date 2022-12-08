@@ -24,6 +24,8 @@ export default function ShoppingCart(){
       <div className="relative bg-pink-500 m-10 p-10">
         <h1 className="text-2xl font-semibold text-white">Shopping Cart</h1>
         <h1 className="absolute bottom-5 right-10 text-white font-semibold">Price</h1>
+      </div>
+      <div className="m-10 p-10 bg-pink-500">
         {
           shoppingCart.length > 0 ? (
             <CartQuantites products={shoppingCart} />
@@ -37,17 +39,13 @@ export default function ShoppingCart(){
 
 function CartQuantites({products}){
   const productsHash = {}
-  const productsQuantity = {}
   for (let i = 0; i < products.length; i++){
-    productsQuantity[products[i]._id] = productsQuantity[products[i]._id] + 1 || 1
     productsHash[products[i]._id] = products[i]
   }
-  console.log(productsHash)
-  console.log(productsQuantity)
   return (
     <>
       {Object.values(productsHash).map(product => {
-        const quantity = productsQuantity[product._id]
+        const quantity = product.quantity || 1
         return (
           <CartItem product={product} quantity={quantity} />
       )})}
@@ -57,16 +55,31 @@ function CartQuantites({products}){
 
 function CartItem({product, quantity}){
   const [itemQuantity, setItemQuantity] = useState(quantity)
+
+  const removeItemFromCart = async () => {
+    const response = await fetch(`${SERVER_URL}/v1/`)
+    const data = await response.json()
+  }
+
+  const updateItemQuantity = async () => {
+    const response = await fetch(`${SERVER_URL}/v1/`)
+    const data = await response.json()
+  }
+
   return (
     <div className="flex justify-between my-5">
-      <div>{product.name}</div>
-      <select name="quantity" id="quantity" value={itemQuantity}>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
-      </select>
+      <div className="text-white font-medium">{product.name}</div>
+      <div className="flex items-center gap-x-2">
+        <select name="quantity" id="quantity" value={itemQuantity}>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+        </select>
+        <button className="text-white font-medium">Remove</button>
+      </div>
+      
     </div>
   )
 }

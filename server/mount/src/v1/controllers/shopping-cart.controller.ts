@@ -43,10 +43,16 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
       shopping_cart = []
     }
     // // only add to shopping cart if product does not already exist in cart
-    // if (!shopping_cart.some(product => product._id === product_id)){
-    //   shopping_cart.push(product)
-    // }
-    shopping_cart.push(product)
+    if (!shopping_cart.some(product => product._id === product_id)){
+      shopping_cart.push(product)
+    } else {
+      const itemIndex = shopping_cart.findIndex(product => product._id === product_id)
+      console.log(itemIndex)
+      shopping_cart[itemIndex] =  {
+        ...shopping_cart[itemIndex],
+        quantity: shopping_cart[itemIndex].quantity + 1
+      }
+    }
     req.session.shopping_cart = shopping_cart
 
     return res.status(200).json({
@@ -76,7 +82,7 @@ const removeItemFromShoppingCart = async (req: Request, res: Response) => {
       })
     }
 
-    shopping_cart = shopping_cart.filter(proudct => proudct._id !== product_id)
+    shopping_cart = shopping_cart.filter(product => product._id !== product_id)
     req.session.shopping_cart = shopping_cart
 
     return res.status(200).json({
