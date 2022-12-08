@@ -29,7 +29,8 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
       })
     }
 
-    const product = await ProductModel.findOne({id: product_id})
+    const product = await ProductModel.findOne({_id: product_id})
+    console.log(product)
     if (!product){
       return res.status(404).json({
         message: `Error: product with id: ${product_id} not found`

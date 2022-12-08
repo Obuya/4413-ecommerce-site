@@ -17,8 +17,6 @@ export default function ShoppingCart(){
     getShoppingCart()
   }, [])
 
-  console.log(shoppingCart)
-
   return (
     <div className="h-screen">
       <Navbar search={false} loginAndCart={false} />
@@ -26,9 +24,28 @@ export default function ShoppingCart(){
       <div className="relative bg-pink-500 m-10 p-10">
         <h1 className="text-2xl font-semibold text-white">Shopping Cart</h1>
         <h1 className="absolute bottom-5 right-10 text-white font-semibold">Price</h1>
-
+        {
+          shoppingCart.length > 0 ? (
+            <CartQuantites products={shoppingCart} />
+          ) : ("")
+        }
       </div>
     </div>
   )
 }
 
+
+function CartQuantites({products}){
+  const productsHash = {}
+  console.log(products)
+  for (let i = 0; i < products.length; i++){
+    productsHash[products[i]._id] = productsHash[products[i]._id] + 1 || 1
+  }
+  console.log(productsHash)
+
+  return (
+    <>
+      {products.map(product => <div>{product.name}</div>)}
+    </>
+  )
+}
