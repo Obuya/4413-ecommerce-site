@@ -20,6 +20,7 @@ export default function Home() {
         const response = await fetch(`${SERVER_URL}/v1/products`)
         const data = await response.json()
         if (response.ok){
+          
           setProducts(data)
         }
     }
