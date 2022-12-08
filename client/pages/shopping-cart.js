@@ -47,7 +47,7 @@ function CartQuantites({products, setShoppingCart}){
       {Object.values(productsHash).map(product => {
         const quantity = product.quantity || 1
         return (
-          <CartItem product={product} quantity={quantity} setShoppingCart={setShoppingCart} />
+          <CartItem key={product._id} product={product} quantity={quantity} setShoppingCart={setShoppingCart} />
       )})}
     </>
   )
