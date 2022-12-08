@@ -11,14 +11,9 @@ dotenv.config()
 const app = express()
 
 // middleware and cors options
-
-const corsOptions = {
-  origin: '*',
-}
-app.use(cors(corsOptions))
-app.options('*', cors())
-
 app.use(express.json())
+app.use(cors({credentials: true, origin: ['http://localhost:3000', 'https://4413-ecommerce.vercel.app']}))
+app.options('*', cors())
 
 // middleware for creating and storing user sessions
 app.use(session({
