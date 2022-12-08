@@ -25,6 +25,7 @@ export default function Login(){
     try {
       const response = await fetch(`${SERVER_URL}/v1/auth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

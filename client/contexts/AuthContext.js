@@ -24,7 +24,8 @@ const AuthProvider = ({children}) => {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
-        }
+        },
+        credentials: 'include'
       })
       if (!response.ok) return
       const data = await response.json()

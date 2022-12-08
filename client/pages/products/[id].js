@@ -8,12 +8,18 @@ const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 function Product (){
   const [product, setProduct] = useState()
   const [errorMessage, setErrorMessage] = useState('')
+  const [addedToCart, setAddedToCart] = useState(false)
+
   const router = useRouter()
   const { id } = router.query
 
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
+
   useEffect(() => {
     const getProductDetails = async () => {
-        const response = await fetch(`${SERVER_URL}/v1/products/${id}`)
+        const response = await fetch(`${SERVER_URL}/v1/products/${id}`, {
+          credentials: 'include'
+        })
         const data = await response.json()
 
         if (!response.ok){
@@ -33,6 +39,25 @@ function Product (){
     )
   }
 
+
+  const addItemToShoppingCart = async () => {
+    const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        product_id: id
+      })
+    })
+
+    const data = await response.json()
+    if (!response.ok){
+      setErrorMessage(data.message)
+    }
+    setAddedToCart(true)
+  }
 
   return (
     <div>
@@ -87,7 +112,24 @@ function Product (){
                 {product.quantity > 0 ? 'Available' : 'Out of stock'} 
               </div>
             </div>
-            <div className='mt-20'>ADD TO CART</div>
+            <div className='flex'>
+              <button 
+                className={addedToCart ? 'text-gray-500 mt-20' : 'text-black mt-20'} 
+                onClick={addItemToShoppingCart}
+                disabled={addedToCart}
+              >
+                ADD TO CART
+              </button>
+              {
+                  addedToCart
+                  ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-green-500 mt-20">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  )
+                  : ('')
+                }
+            </div>
           </div>
         </div>
       </div>

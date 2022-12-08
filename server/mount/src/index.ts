@@ -19,7 +19,7 @@ app.options('*', cors())
 app.use(session({
   secret: 'secret_session_secret', // THIS WILL TYPICALLY BE IN THE .env
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
 }))
 // api versioning
 app.use('/v1', v1)
