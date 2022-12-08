@@ -24,4 +24,11 @@ router.post('/', controller.addItemToShoppingCart)
  */
 router.delete('/', controller.removeItemFromShoppingCart)
 
+/**
+ * @route /v1/shopping_cart/
+ * @request PATCH
+ * @description Update item in your shopping cart
+ */
+router.patch('/', controller.updateItemInShoppingCart)
+
 module.exports = router

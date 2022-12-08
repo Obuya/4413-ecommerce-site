@@ -55,29 +55,69 @@ function CartQuantites({products}){
 
 function CartItem({product, quantity}){
   const [itemQuantity, setItemQuantity] = useState(quantity)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const removeItemFromCart = async () => {
-    const response = await fetch(`${SERVER_URL}/v1/`)
+    const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        product_id: product._id
+      })
+    })
     const data = await response.json()
+     if (!response.ok){
+      setErrorMessage(data.message)
+    }
+    setItemQuantity(newQuantity)
+    setErrorMessage('')
   }
 
-  const updateItemQuantity = async () => {
-    const response = await fetch(`${SERVER_URL}/v1/`)
+  const updateItemQuantity = async (event) => {
+    const newQuantity = event.target.value
+    const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        product_id: product._id,
+        quantity: newQuantity
+      })
+    })
     const data = await response.json()
+
+    if (!response.ok){
+      setErrorMessage(data.message)
+    }
+    setItemQuantity(newQuantity)
+    setErrorMessage('')
   }
 
   return (
     <div className="flex justify-between my-5">
       <div className="text-white font-medium">{product.name}</div>
       <div className="flex items-center gap-x-2">
-        <select name="quantity" id="quantity" value={itemQuantity}>
+        <select 
+          name="quantity" 
+          id="quantity" 
+          value={itemQuantity} 
+          onChange={(event) => updateItemQuantity(event)}
+        >
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
           <option value={4}>4</option>
           <option value={5}>5</option>
         </select>
-        <button className="text-white font-medium">Remove</button>
+        <button 
+          className="text-white font-medium"
+          onClick={removeItemFromCart}
+        >Remove</button>
       </div>
       
     </div>

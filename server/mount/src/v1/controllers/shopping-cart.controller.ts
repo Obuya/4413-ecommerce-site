@@ -30,7 +30,6 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
     }
 
     const product = await ProductModel.findOne({_id: product_id})
-    console.log(product)
     if (!product){
       return res.status(404).json({
         message: `Error: product with id: ${product_id} not found`
@@ -47,9 +46,8 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
       shopping_cart.push(product)
     } else {
       const itemIndex = shopping_cart.findIndex(product => product._id === product_id)
-      console.log(itemIndex)
       shopping_cart[itemIndex] =  {
-        ...shopping_cart[itemIndex],
+        ...product,
         quantity: shopping_cart[itemIndex].quantity + 1
       }
     }
@@ -96,11 +94,53 @@ const removeItemFromShoppingCart = async (req: Request, res: Response) => {
   }
 }
 
+const updateItemInShoppingCart = async (req: Request, res: Response) => {
+  const { product_id, quantity } = req.body
+  try {
+    if (!product_id){
+      return res.status(400).json({
+        message: "Error: missing product id unable to add item to shopping cart"
+      })
+    }
+
+    let shopping_cart: any[] = req.session.shopping_cart
+    if (!shopping_cart || shopping_cart.length === 0){
+      return res.status(404).json({
+        message: `Error: empty shopping cart`
+      })
+    }
+
+    let indexOfItemToUpdate = shopping_cart.findIndex(product => product._id === product_id)
+    if (indexOfItemToUpdate === -1){
+       return res.status(404).json({
+        message: `Error: product with id: ${product_id} not in shopping cart`
+      })
+    }
+
+    shopping_cart[indexOfItemToUpdate] = {
+      ...shopping_cart[indexOfItemToUpdate],
+      quantity
+    }
+
+    req.session.shopping_cart = shopping_cart
+
+    return res.status(200).json({
+      shopping_cart: shopping_cart
+    })
+  } catch (err){
+    console.log(err)
+    return res.status(500).json({
+      message: "Error: Internal Server Error"
+    })
+  }
+}
+
 
 module.exports = {
   getShoppingCart,
   addItemToShoppingCart,
-  removeItemFromShoppingCart
+  removeItemFromShoppingCart,
+  updateItemInShoppingCart
 }
 
 
