@@ -25,7 +25,8 @@ export const reviewSchema = new Schema<Review>({
 
 interface ProductDetails {
     brand: string,
-    type: string
+    type: string,
+    subcategories: string,
 }
 
 export interface Product {
@@ -36,11 +37,13 @@ export interface Product {
     details: ProductDetails,
     sellerName: string,
     name: string
+    imageURLs: string,
 }
 
 export const productDetails = new Schema<ProductDetails>({
     brand: String,
-    type: String
+    type: String,
+    subcategories: String,
 })
 
 export const productSchema = new Schema<Product>({
@@ -50,7 +53,8 @@ export const productSchema = new Schema<Product>({
     description: String,
     details: productDetails,
     sellerName: String,
-    name: String
+    name: String,
+    imageURLs: String
 })
 
 const ProductModel = model<Product>('Product', productSchema)
