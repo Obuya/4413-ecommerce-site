@@ -20,7 +20,6 @@ app.use(session({
   secret: 'secret_session_secret', // THIS WILL TYPICALLY BE IN THE .env
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
 }))
 
 app.options('*', cors())
