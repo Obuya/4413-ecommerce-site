@@ -13,9 +13,7 @@ const app = express()
 app.set('trust proxy', 1)
 // middleware and cors options
 app.use(express.json())
-app.use(cors())
-//app.use(cors({credentials: true, origin: ['http://localhost:3000', 'https://4413-ecommerce.vercel.app']}))
-app.options('*', cors())
+app.use(cors({credentials: true, origin: ['http://localhost:3000', 'https://4413-ecommerce.vercel.app']}))
 
 // middleware for creating and storing user sessions
 app.use(session({
@@ -24,6 +22,10 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }))
+
+app.options('*', cors())
+
+
 // api versioning
 app.use('/v1', v1)
 
