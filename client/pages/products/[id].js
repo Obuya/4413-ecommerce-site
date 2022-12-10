@@ -50,7 +50,6 @@ function Product (){
       })
     })
 
-    console.log(id)
     const data = await response.json()
     if (!response.ok){
       setErrorMessage(data.message)
@@ -79,12 +78,16 @@ function Product (){
 
         <div className='flex w-1/2 gap-x-5'>
           <div className='flex flex-col gap-y-5'>
-            <div className='w-36 h-28 bg-blue-100'>PREVIEW IMAGE 1</div>
-            <div className='w-36 h-28 bg-blue-100'>PREVIEW IMAGE 2</div>
-            <div className='w-36 h-28 bg-blue-100'>PREVIEW IMAGE 3</div>
-            <div className='w-36 h-28 bg-blue-100'>PREVIEW IMAGE 4</div>    
+            {product.imageURLs && product.imageURLs.split(',')
+              .slice(1,4)
+              .map(img =>  <img src={img} className='w-36 h-28 bg-blue-100'/>
+            )}  
           </div>
-          <div className='w-full h-[400px] bg-red-100'>MAIN IMAGE</div>
+          <div>
+            {
+              product.imageURLs && product.imageURLs.split(',').slice(0,1).map(img => <img src={img} className='w-full h-[400px] bg-red-100' />)
+            }
+          </div>
         </div>
         <div className='flex w-1/2 px-5 bg-blue-100'>
           <div>

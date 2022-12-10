@@ -14,6 +14,7 @@ app.set('trust proxy', 1)
 // middleware and cors options
 app.use(express.json())
 app.use(cors({credentials: true, origin: ['http://localhost:3000', 'https://4413-ecommerce.vercel.app', 'https://clownfish-app-fcbhe.ondigitalocean.app/']}))
+app.options('*', cors())
 
 // middleware for creating and storing user sessions
 app.use(session({
@@ -22,7 +23,6 @@ app.use(session({
   saveUninitialized: true,
 }))
 
-app.options('*', cors())
 
 
 // api versioning

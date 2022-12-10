@@ -3,9 +3,6 @@ import ProductModel from '../../db/models/product'
 
 const getShoppingCart = async (req: Request, res: Response) => {
   try {
-    console.log('SESSION:', req.session)
-    console.log('SHOPPING CART:', req.session.shopping_cart)
-
     let shopping_cart = req.session.shopping_cart
 
     if (!shopping_cart){
@@ -55,9 +52,7 @@ const addItemToShoppingCart = async (req: Request, res: Response) => {
       }
     }
 
-    console.log('ADDED CART:', shopping_cart)
     req.session.shopping_cart = shopping_cart
-    console.log('STORED IN SESSION:', req.session.shopping_cart)
 
     return res.status(200).json({
       shopping_cart: shopping_cart
