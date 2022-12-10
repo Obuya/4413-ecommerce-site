@@ -104,7 +104,8 @@ function ProductDisplay(product){
     description,
     reviews,
     quantity,
-    _id
+    _id,
+    imageURLs
   } = product
   {/* TODO SHOULD BE MOVED TO UTIL FUNCTION */}
   const ratings = reviews.filter(review => review.score && review.score != 'N/A')
@@ -114,12 +115,12 @@ function ProductDisplay(product){
   }
   const average_rating = Math.round(sum / ratings.length)
 
+  const img = imageURLs.split(',')[0]
   return (
     <Link href={`/products/${_id}`}>
       <div key={_id} className='border rounded-lg px-5 bg-white'>
-        <div className='h-40 w-full bg-gray-200 mb-5 mt-10'>
-          {/** DISPLAY IMAGE WILL GO HERE */}
-          <img />
+        <div className='h-40 w-full mb-5 mt-10 flex justify-center'>
+          <img src={img} className=' object-cover h-40' />
         </div>
 
         <div className='text-[14px] font-light'>{name}</div>
