@@ -12,6 +12,7 @@ export default function SignUp(){
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+  const [verify,setVerifyPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   const router = useRouter()
@@ -30,9 +31,18 @@ export default function SignUp(){
 
   const handleSignUp = async (event) => {
     event.preventDefault()
+    var format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     // validate username and password
-    if (!username || !password){
-      setErrorMessage('Invalid username or password')
+    if (!username || !password ||!email || !verify){
+      setErrorMessage('One or more entries is invalid.')
+      return
+    }
+    if(email.match(format) == null){
+      setErrorMessage("Invalid email.")
+      return 
+    }
+    if(verify.match(password) == null){
+      setErrorMessage("Passwords don't match.")
       return
     }
     // TODO SIGN UP REQUEST
@@ -77,6 +87,13 @@ export default function SignUp(){
                 type={"text"}
                 maxLength={50}
               />
+               <input 
+                placeholder='email' 
+                className='border rounded-lg px-2 py-1' 
+                onChange={(event) => setEmail(event.target.value)}
+                type={"text"}
+                maxLength={50}
+              />
               <input 
                 placeholder='password' 
                 className='border rounded-lg px-2 py-1' 
@@ -84,13 +101,15 @@ export default function SignUp(){
                 type={"password"}
                 maxLength={120}
               />
-              <input 
-                placeholder='email' 
+               <input 
+                placeholder='verify password' 
                 className='border rounded-lg px-2 py-1' 
-                onChange={(event) => setEmail(event.target.value)}
-                type={"text"}
-                maxLength={50}
+                onChange={(event) => setVerifyPassword(event.target.value)}
+                type={"password"}
+                maxLength={120}
               />
+
+             
               <div className="flex justify-center">
                 <button 
                   onClick={(event) => handleSignUp(event)} 
