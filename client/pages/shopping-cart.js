@@ -6,6 +6,11 @@ const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 export default function ShoppingCart(){
   const [shoppingCart, setShoppingCart] = useState([])
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
   useEffect(() => {
     const getShoppingCart = async () => {
       const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
@@ -17,20 +22,35 @@ export default function ShoppingCart(){
     getShoppingCart()
   }, [])
 
+  if (shoppingCart.length > 0) console.log()
+  
+
   return (
     <div className="h-screen">
       <Navbar search={false} loginAndCart={false} />
 
-      <div className="relative bg-pink-500 m-10 p-10">
-        <h1 className="text-2xl font-semibold text-white">Shopping Cart</h1>
-        <h1 className="absolute bottom-5 right-10 text-white font-semibold">Price</h1>
-      </div>
-      <div className="m-10 p-10 bg-pink-500">
-        {
-          shoppingCart.length > 0 ? (
-            <CartQuantites products={shoppingCart} setShoppingCart={setShoppingCart} />
-          ) : ("")
-        }
+      <div className="flex">
+        <div className="flex-grow">
+          <div className="relative bg-pink-500 m-10 p-10">
+            <h1 className="text-2xl font-semibold text-white">Shopping Cart</h1>
+            <h1 className="absolute bottom-5 right-10 text-white font-semibold">Price</h1>
+          </div>
+          
+          <div className="m-10 p-10 bg-pink-500">
+            {
+              shoppingCart.length > 0 ? (
+                <CartQuantites products={shoppingCart} setShoppingCart={setShoppingCart} />
+              ) : ("")
+            }
+          </div>
+        </div>
+
+        <div className="mt-[300px] mr-10">
+          <div>
+            <h1>Subtotal</h1>
+            {shoppingCart.length > 0 ? formatter.format((shoppingCart.reduce((acc, obj) =>  acc + (obj.price * obj.quantity), 0))) : ''}
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -95,32 +115,45 @@ function CartItem({product, quantity, setShoppingCart}){
     if (!response.ok){
       setErrorMessage(data.message)
     }
+    setShoppingCart(data.shopping_cart)
     setItemQuantity(newQuantity)
     setErrorMessage('')
   }
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
   return (
     <div className="flex justify-between my-5">
-      <div className="text-white font-medium">{product.name}</div>
-      <div className="flex items-center gap-x-2">
-        <select 
-          name="quantity" 
-          id="quantity" 
-          value={itemQuantity} 
-          onChange={(event) => updateItemQuantity(event)}
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-        </select>
-        <button 
-          className="text-white font-medium"
-          onClick={removeItemFromCart}
-        >Remove</button>
+      <div className="text-white font-medium">
+        {product.name}
+
+        <div className="flex items-center gap-x-2">
+          <select 
+            name="quantity" 
+            id="quantity" 
+            className="bg-white text-black"
+            value={itemQuantity} 
+            onChange={(event) => updateItemQuantity(event)}
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </select>
+          <button 
+            className="text-white font-medium"
+            onClick={removeItemFromCart}
+          >Remove From Cart</button>
+        </div>
+      </div>  
+
+      <div className="text-white font-bold">
+        {formatter.format(product.price * quantity)}
       </div>
-      
     </div>
   )
 }
