@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 import Navbar from '../../components/navigation/Navbar'
 import Link from 'next/link'
 
+
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
-function Product (){
+function Product() {
   const [product, setProduct] = useState()
   const [errorMessage, setErrorMessage] = useState('')
   const [addedToCart, setAddedToCart] = useState(false)
@@ -15,21 +16,22 @@ function Product (){
 
   const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
+
   useEffect(() => {
     const getProductDetails = async () => {
-        const response = await fetch(`${SERVER_URL}/v1/products/${id}`)
-        const data = await response.json()
+      const response = await fetch(`${SERVER_URL}/v1/products/${id}`)
+      const data = await response.json()
 
-        if (!response.ok){
-          setErrorMessage(data.message)
-          return
-        }
-        setProduct(data)
-    }  
+      if (!response.ok) {
+        setErrorMessage(data.message)
+        return
+      }
+      setProduct(data)
+    }
     if (id) getProductDetails()
   }, [id])
 
-  if (!product){
+  if (!product) {
     return (
       <div>
         {errorMessage && '404 Product not found'}
@@ -51,7 +53,7 @@ function Product (){
     })
 
     const data = await response.json()
-    if (!response.ok){
+    if (!response.ok) {
       setErrorMessage(data.message)
     }
     setAddedToCart(true)
@@ -78,15 +80,11 @@ function Product (){
 
         <div className='flex w-1/2 gap-x-5'>
           <div className='flex flex-col gap-y-5'>
-            {product.imageURLs && product.imageURLs.split(',')
-              .slice(1,4)
-              .map(img =>  <img src={img} className='w-36 h-28 bg-blue-100'/>
-            )}  
           </div>
-          <div>
-            {
-              product.imageURLs && product.imageURLs.split(',').slice(0,1).map(img => <img src={img} className='w-full h-[400px] bg-red-100' />)
-            }
+          <div className='w-full h-[400px] bg-white-100'>
+
+          <img src = {product.imageURLs.split(",", )[0]} className="object-contain w-full h-[400px]"/>
+
           </div>
         </div>
         <div className='flex w-1/2 px-5 bg-blue-100'>
@@ -98,39 +96,39 @@ function Product (){
               <div className='text-black text-opacity-50 mr-28'>{id}</div>
               <div className='flex text-black text-opacity-50'>
                 {
-                  product.quantity > 0 
-                  ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-green-500">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  )
-                  : (
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-red-500">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  )
+                  product.quantity > 0
+                    ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-green-500">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    )
+                    : (
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-red-500">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    )
                 }
 
-                {product.quantity > 0 ? 'Available' : 'Out of stock'} 
+                {product.quantity > 0 ? 'Available' : 'Out of stock'}
               </div>
             </div>
             <div className='flex'>
-              <button 
-                className={addedToCart ? 'text-gray-500 mt-20' : 'text-black mt-20'} 
+              <button
+                className={addedToCart ? 'text-gray-500 mt-20' : 'text-black mt-20'}
                 onClick={addItemToShoppingCart}
                 disabled={addedToCart}
               >
                 ADD TO CART
               </button>
               {
-                  addedToCart
+                addedToCart
                   ? (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-green-500 mt-20">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                   )
                   : ('')
-                }
+              }
             </div>
           </div>
         </div>
