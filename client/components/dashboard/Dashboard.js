@@ -115,8 +115,6 @@ function ProductDisplay(product){
   }
   const average_rating = Math.round(sum / ratings.length)
   const img = imageURLs.split(",", )[0]
-
-  const img = imageURLs.split(',')[0]
   return (
     <Link href={`/products/${_id}`} className="group border border-black-500 rounded">
         <div  key={_id} className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-white-200 xl:aspect-w-7 xl:aspect-h-8">
