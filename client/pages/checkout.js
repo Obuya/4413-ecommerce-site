@@ -16,7 +16,6 @@ export default function Checkout(){
   const [name, setName] = useState(user ? user.name : '')
   const [cardNumber, setCardNumber] = useState(user ? user.cardNumber : '')
 
-  console.log('USER:', user)
   // if not signed up or in redirect to login
   useEffect(() => {
       if (!user) router.push('/signup', { query: { from: router.pathname }})
@@ -27,6 +26,7 @@ export default function Checkout(){
   // verify there is items in cart to checkout
   useEffect(() => {
     if (shoppingCart.length === 0) router.push('/')
+    return
   }, [shoppingCart])
 
   if (!shoppingCart) return (<div></div>)
@@ -85,7 +85,7 @@ export default function Checkout(){
         <div className="w-1/2 p-10">
           Order Summary:
           {shoppingCart.map(product => (
-              <div className="bg-white px-5 py-2 rounded-lg">
+              <div className="bg-white px-5 py-2 rounded-lg" key={product._id}>
                   <div>{product.name}</div>
                   <div>{product.quantity} * {product.price} = {formatter.format(product.quantity * product.price)}</div>
                   <div></div>
