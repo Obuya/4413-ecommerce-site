@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import Navbar from "../components/navigation/Navbar"
 import { AuthContext } from "../contexts/AuthContext"
-
+import Link from "next/link"
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export default function ShoppingCart(){
-  const {shoppingCart, setShoppingCart} = useContext(AuthContext)
+  const { shoppingCart, setShoppingCart } = useContext(AuthContext)
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -22,10 +22,7 @@ export default function ShoppingCart(){
   //   } 
   //   getShoppingCart()
   // }, [])
-
-  if (shoppingCart.length > 0) console.log()
   
-  console.log(shoppingCart)
   return (
     <div className="h-screen">
       <Navbar search={false} loginAndCart={false} />
@@ -51,10 +48,21 @@ export default function ShoppingCart(){
         </div>
 
         <div className="mt-[300px] mr-10">
-          <div>
-            <h1>Subtotal</h1>
-            {shoppingCart.length > 0 ? formatter.format((shoppingCart.reduce((acc, obj) =>  acc + (obj.price * obj.quantity), 0))) : ''}
+          <div className="bg-gray-200 px-10 py-2 rounded-lg">
+            <div>
+              <h1 className="font-bold">Subtotal</h1>
+              {shoppingCart.length > 0 
+                ? formatter.format((shoppingCart.reduce((acc, obj) =>  acc + (obj.price * obj.quantity), 0))) 
+                : '$0.00'
+              }
+            </div>
+            <Link href="/checkout">
+              <button className="bg-orange-400 px-5 py-2 rounded-lg my-5">
+                Proceed to Checkout
+              </button>
+            </Link>
           </div>
+          
         </div>
       </div>
     </div>

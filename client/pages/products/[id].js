@@ -101,7 +101,7 @@ function Product() {
 
           </div>
         </div>
-        <div className='flex w-1/2 px-5 bg-blue-100'>
+        <div className='flex w-1/2 px-5'>
           <div>
             <div className='text-3xl font-bold'>{product.name}</div>
             <div className='text-3xl font-bold mt-5'>${product.price}</div>
@@ -144,6 +144,16 @@ function Product() {
                   : ('')
               }
             </div>
+            
+            {addedToCart && (
+              <div>
+                <Link href={"/checkout"}>
+                  <button  className='bg-orange-300 px-4 py-2 rounded-lg mt-5'>
+                  Proceed to Checkout
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
