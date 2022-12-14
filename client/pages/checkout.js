@@ -19,15 +19,10 @@ export default function Checkout(){
   // if not signed up or in redirect to login
   useEffect(() => {
       if (!user) router.push('/signup', { query: { from: router.pathname }})
-  }, [user])
+      if (shoppingCart.length === 0) router.push('/')
+  }, [user, shoppingCart])
 
   if (!user) return (<div></div>)
-
-  // verify there is items in cart to checkout
-  useEffect(() => {
-    if (shoppingCart.length === 0) router.push('/')
-    return
-  }, [shoppingCart])
 
   if (!shoppingCart) return (<div></div>)
 
