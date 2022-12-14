@@ -4,6 +4,7 @@ import { Review, reviewSchema, productSchema, Product } from './product'
 // TODO
 export interface User {
     username: string,
+    email: string
     hash: string,
     reviews: Review[],
     purchases: Product[],
@@ -15,6 +16,7 @@ export interface User {
 
 const userSchema = new Schema<User>({
     username: { unique: true, type: String, maxlength: 50},
+    email: String,
     hash: String,
     reviews: [reviewSchema],
     purchases: [productSchema],

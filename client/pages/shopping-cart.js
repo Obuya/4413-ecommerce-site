@@ -1,30 +1,31 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Navbar from "../components/navigation/Navbar"
+import { AuthContext } from "../contexts/AuthContext"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export default function ShoppingCart(){
-  const [shoppingCart, setShoppingCart] = useState([])
+  const {shoppingCart, setShoppingCart} = useContext(AuthContext)
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   })
 
-  useEffect(() => {
-    const getShoppingCart = async () => {
-      const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
-        credentials: 'include'
-      })
-      const data = await response.json()
-      setShoppingCart(data.shopping_cart)
-    } 
-    getShoppingCart()
-  }, [])
+  // useEffect(() => {
+  //   const getShoppingCart = async () => {
+  //     const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+  //       credentials: 'include'
+  //     })
+  //     const data = await response.json()
+  //     setShoppingCart(data.shopping_cart)
+  //   } 
+  //   getShoppingCart()
+  // }, [])
 
   if (shoppingCart.length > 0) console.log()
   
-
+  console.log(shoppingCart)
   return (
     <div className="h-screen">
       <Navbar search={false} loginAndCart={false} />
@@ -39,7 +40,11 @@ export default function ShoppingCart(){
           <div className="m-10 p-10 bg-pink-500">
             {
               shoppingCart.length > 0 ? (
-                <CartQuantites products={shoppingCart} setShoppingCart={setShoppingCart} />
+                <CartQuantites 
+                  products={shoppingCart} 
+                  setShoppingCart={setShoppingCart} 
+                  shoppingCart={shoppingCart} 
+                />
               ) : ("")
             }
           </div>
@@ -57,7 +62,7 @@ export default function ShoppingCart(){
 }
 
 
-function CartQuantites({products, setShoppingCart}){
+function CartQuantites({products, setShoppingCart, shoppingCart}){
   const productsHash = {}
   for (let i = 0; i < products.length; i++){
     productsHash[products[i]._id] = products[i]
@@ -67,55 +72,68 @@ function CartQuantites({products, setShoppingCart}){
       {Object.values(productsHash).map(product => {
         const quantity = product.quantity || 1
         return (
-          <CartItem key={product._id} product={product} quantity={quantity} setShoppingCart={setShoppingCart} />
+          <CartItem 
+            key={product._id} 
+            product={product} 
+            quantity={quantity} 
+            setShoppingCart={setShoppingCart} 
+            shoppingCart={shoppingCart} 
+          />
       )})}
     </>
   )
 }
 
-function CartItem({product, quantity, setShoppingCart}){
+function CartItem({product, quantity, shoppingCart, setShoppingCart}){
   const [itemQuantity, setItemQuantity] = useState(quantity)
   const [errorMessage, setErrorMessage] = useState('')
 
   const removeItemFromCart = async () => {
-    const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
-      method: 'DELETE',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        product_id: product._id
-      })
-    })
-    const data = await response.json()
-     if (!response.ok){
-      setErrorMessage(data.message)
-    }
+    // const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+    //   method: 'DELETE',
+    //   credentials: 'include',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     product_id: product._id
+    //   })
+    // })
+    // const data = await response.json()
+    //  if (!response.ok){
+    //   setErrorMessage(data.message)
+    // }
     // update shopping cart
-    setShoppingCart(data.shopping_cart)
+    setShoppingCart(shoppingCart => shoppingCart.filter(oldProduct => oldProduct._id !== product._id))
     setErrorMessage('')
   }
 
   const updateItemQuantity = async (event) => {
     const newQuantity = event.target.value
-    const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        product_id: product._id,
-        quantity: newQuantity
-      })
-    })
-    const data = await response.json()
+    // const response = await fetch(`${SERVER_URL}/v1/shopping_cart`, {
+    //   method: 'PATCH',
+    //   credentials: 'include',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     product_id: product._id,
+    //     quantity: newQuantity
+    //   })
+    // })
+    // const data = await response.json()
 
-    if (!response.ok){
-      setErrorMessage(data.message)
-    }
-    setShoppingCart(data.shopping_cart)
+    // if (!response.ok){
+    //   setErrorMessage(data.message)
+    // }
+    const oldProducts = [...shoppingCart].filter(oldProduct => oldProduct._id !== product._id)
+    setShoppingCart([
+      ...oldProducts,
+      {
+        ...product,
+        quantity: newQuantity
+      }
+    ])
     setItemQuantity(newQuantity)
     setErrorMessage('')
   }

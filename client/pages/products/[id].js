@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Navbar from '../../components/navigation/Navbar'
 import Link from 'next/link'
+import { AuthContext } from '../../contexts/AuthContext'
 
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
@@ -10,12 +11,11 @@ function Product() {
   const [product, setProduct] = useState()
   const [errorMessage, setErrorMessage] = useState('')
   const [addedToCart, setAddedToCart] = useState(false)
-
+  const { shoppingCart, setShoppingCart } = useContext(AuthContext) 
   const router = useRouter()
   const { id } = router.query
 
   const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
-
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -51,10 +51,24 @@ function Product() {
         product_id: id
       })
     })
-
+    
     const data = await response.json()
     if (!response.ok) {
       setErrorMessage(data.message)
+    }
+
+    if (!shoppingCart.some(product => product._id === id)){
+      setShoppingCart(cart => [...cart, product])
+    } else {
+      const itemIndex = shoppingCart.findIndex(product => product._id === id)
+      const updatedCart = shoppingCart.filter(product => product._id !== id)
+      updatedCart.push(
+          {
+          ...product,
+          quantity: shoppingCart[itemIndex].quantity + 1
+        }
+      )
+      setShoppingCart(updatedCart)
     }
     setAddedToCart(true)
   }
