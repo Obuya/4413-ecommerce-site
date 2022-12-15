@@ -5,6 +5,7 @@ import Link from 'next/link'
 function Dashboard({products, setProducts}){  
   const [filterCategory, setFilterCategory] = useState()
   const [filterBrand, setFilterBrand] = useState()
+  
 
   function sortProducts(option='ASC') {
     let sortedProducts = [...products]
@@ -39,15 +40,16 @@ function Dashboard({products, setProducts}){
         <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Categories</h1>
           <form>
-            {//categories
-              _.uniqBy(products, 'details.type')
-                .map(category => (
-                  <div className='flex gap-x-2' key={category.details.type}> 
-                    <input name="price" type={"radio"} onClick={() => setFilterCategory(category.details.type)} />
-                    <label className='font-medium'>{category.details.type}</label>
+            {//categories 
+            
+            _.uniqBy(products, 'details.subcategories')
+                .map(cat => (
+                  <div className='flex gap-x-2' key={cat.details.subcategories[0]}> 
+                    <input name="price" type={"radio"} onClick={() => setFilterBrand(cat.details.subcategories)} />
+                    <label className='font-medium'>{cat.details.subcategories[0]}</label>
                   </div>
-                  )
                 )
+              )
               }
           </form>
         </div>
@@ -110,11 +112,10 @@ function ProductDisplay(product){
     if (rating.score) sum += parseInt(rating.score)
   }
   const average_rating = Math.round(sum / ratings.length)
-  const img = imageURLs.split(",", )[0]
   return (
     <Link href={`/products/${_id}`} className="group border border-black-500 rounded">
         <div  key={_id} className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-white-200 xl:aspect-w-7 xl:aspect-h-8">
-          <img src = {img} className="mt-2 object-scale-down h-48 w-96 group-hover:opacity-75"/>
+          <img src = {imageURLs} className="mt-2 object-scale-down h-48 w-96 group-hover:opacity-75"/>
         </div>
         <p className="px-2 mt-5 text-lg font-medium text-gray-900">${price}</p>
         <h3 className="p-2 text-sm text-gray-700">{name}</h3>

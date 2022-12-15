@@ -26,7 +26,7 @@ export const reviewSchema = new Schema<Review>({
 interface ProductDetails {
     brand: string,
     type: string,
-    subcategories: string,
+    subcategories: string[],
 }
 
 export interface Product {
@@ -37,7 +37,7 @@ export interface Product {
     details: ProductDetails,
     sellerName: string,
     name: string
-    imageURLs: string,
+    imageURLs: string[],
     purchases: string[]
 }
 
@@ -54,7 +54,7 @@ const purchaseSchema = new Schema<Purchase>({
 export const productDetails = new Schema<ProductDetails>({
     brand: String,
     type: String,
-    subcategories: String,
+    subcategories: Array,
 })
 
 export const productSchema = new Schema<Product>({
@@ -65,7 +65,7 @@ export const productSchema = new Schema<Product>({
     details: productDetails,
     sellerName: String,
     name: String,
-    imageURLs: String,
+    imageURLs: Array,
     purchases: [purchaseSchema]
 })
 
