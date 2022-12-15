@@ -26,7 +26,7 @@ export const reviewSchema = new Schema<Review>({
 interface ProductDetails {
     brand: string,
     type: string,
-    subcategories: string,
+    subcategories: string[],
 }
 
 export interface Product {
@@ -37,7 +37,7 @@ export interface Product {
     details: ProductDetails,
     sellerName: string,
     name: string
-    imageURLs: string,
+    imageURLs: string[],
     purchases: string[]
 }
 
