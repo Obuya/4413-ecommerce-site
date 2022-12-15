@@ -97,7 +97,7 @@ function Product() {
           </div>
           <div className='w-full h-[400px] bg-white-100'>
 
-          <img src = {product.imageURLs.split(",", )[0]} className="object-contain w-full h-[400px]"/>
+          <img src = {product.imageURLs[0]} className="object-contain w-full h-[400px]"/>
 
           </div>
         </div>
