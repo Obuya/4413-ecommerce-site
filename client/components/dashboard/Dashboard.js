@@ -5,6 +5,7 @@ import Link from 'next/link'
 function Dashboard({products, setProducts}){  
   const [filterCategory, setFilterCategory] = useState()
   const [filterBrand, setFilterBrand] = useState()
+  
 
   function sortProducts(option='ASC') {
     let sortedProducts = [...products]
@@ -39,16 +40,16 @@ function Dashboard({products, setProducts}){
         <div className='m-5 bg-white rounded-lg p-5 border'>
           <h1 className='text-center font-bold mb-2'>Categories</h1>
           <form>
-            {//categories
-              _.uniqBy(products, "details.subcategories")
-                .map(category => (
-                  <div className='flex gap-x-2' key={"S"}> 
-                    <input name="price" type={"radio"} 
-                    onClick={() => setFilterCategory()} />
-                    <label className='font-medium'>{category.details.subcategories}</label>
+            {//categories 
+            
+            _.uniqBy(products, 'details.subcategories')
+                .map(cat => (
+                  <div className='flex gap-x-2' key={cat.details.subcategories[0]}> 
+                    <input name="price" type={"radio"} onClick={() => setFilterBrand(cat.details.subcategories)} />
+                    <label className='font-medium'>{cat.details.subcategories[0]}</label>
                   </div>
-                  )
                 )
+              )
               }
           </form>
         </div>

@@ -21,7 +21,6 @@ export default function Home() {
         const data = await response.json()
         if (response.ok){
           setProducts(data)
-          console.log(data)
         }
     }
     getProducts()

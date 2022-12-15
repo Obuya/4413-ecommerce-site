@@ -54,7 +54,7 @@ const purchaseSchema = new Schema<Purchase>({
 export const productDetails = new Schema<ProductDetails>({
     brand: String,
     type: String,
-    subcategories: String,
+    subcategories: Array,
 })
 
 export const productSchema = new Schema<Product>({
@@ -65,7 +65,7 @@ export const productSchema = new Schema<Product>({
     details: productDetails,
     sellerName: String,
     name: String,
-    imageURLs: String,
+    imageURLs: Array,
     purchases: [purchaseSchema]
 })
 
