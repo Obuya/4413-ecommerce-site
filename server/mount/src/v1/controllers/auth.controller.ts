@@ -14,7 +14,8 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
         address,
         city,
         country,
-        postalcode
+        postalcode,
+        email
     } = req.body
     try {
         if (!username || !password) {
@@ -28,6 +29,7 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
         const newUser = new UserModel({
             username: username,
             hash: hash,
+            email,
             address,
             city,
             postalcode,

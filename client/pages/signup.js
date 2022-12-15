@@ -55,7 +55,8 @@ export default function SignUp(){
         },
         body: JSON.stringify({
           username: username,
-          password: password
+          password: password,
+          email: email
         })
       })
       const data = await response.json()

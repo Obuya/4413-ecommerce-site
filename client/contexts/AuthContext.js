@@ -1,13 +1,14 @@
 import { useContext, useState, createContext, useEffect } from "react"
+import useLocalStorage from "../hooks/useLocalStorage"
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export const AuthContext = createContext()
-
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({children}) => {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(false)
+  const [shoppingCart, setShoppingCart] = useLocalStorage("shopping-cart", []);
 
   const SignOut = () => {
     sessionStorage.removeItem('jwt')
@@ -40,6 +41,8 @@ const AuthProvider = ({children}) => {
             user,
             setUser,
             SignOut,
+            shoppingCart,
+            setShoppingCart
         }}>
             {!loading && children}
         </AuthContext.Provider>

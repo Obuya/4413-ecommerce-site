@@ -8,7 +8,7 @@ export interface Review {
     score: ReviewScore,
     reviewDate: string,
     reviewerId: ObjectId,
-    name: string
+    name: string,
 }
 
 export const reviewSchema = new Schema<Review>({
@@ -20,7 +20,7 @@ export const reviewSchema = new Schema<Review>({
     },
     reviewDate: String,
     reviewerId: Schema.Types.ObjectId,
-    name: String
+    name: String,
 })
 
 interface ProductDetails {
@@ -38,7 +38,18 @@ export interface Product {
     sellerName: string,
     name: string
     imageURLs: string,
+    purchases: string[]
 }
+
+interface Purchase {
+    id: string,
+    quantity: number
+}
+
+const purchaseSchema = new Schema<Purchase>({
+    id: String,
+    quantity: Number
+})
 
 export const productDetails = new Schema<ProductDetails>({
     brand: String,
@@ -54,8 +65,10 @@ export const productSchema = new Schema<Product>({
     details: productDetails,
     sellerName: String,
     name: String,
-    imageURLs: String
+    imageURLs: String,
+    purchases: [purchaseSchema]
 })
+
 
 const ProductModel = model<Product>('Product', productSchema)
 
