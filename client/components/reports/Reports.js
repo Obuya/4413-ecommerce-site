@@ -30,7 +30,7 @@ function Reports(){
             {
                 profile && profile.sold && (
                     profile.sold.map(product => (
-                    <div className="m-5">
+                    <div className="m-5" key={product.id}>
                         <div>Product Name: {product.name}</div>
                         <div>Quantity: {product.quantity}</div>
                     </div>
