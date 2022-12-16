@@ -21,7 +21,7 @@ export default function Checkout(){
   useEffect(() => {
       if (!user) router.push('/signup', { query: { from: router.pathname }})
       if (shoppingCart.length === 0) router.push('/')
-  }, [user, shoppingCart])
+  }, [user])
 
   if (!user) return (<div></div>)
 
@@ -75,14 +75,13 @@ export default function Checkout(){
       setErrorMessage(data.message)
       return
     }
-    //setShoppingCart([])
-    // push to a success page maybe
-    //router.push('sucess page')
+    setShoppingCart([])
+    //push to a success page maybe
+    router.push('/order-success')
     setErrorMessage('')
   }
 
-
-    
+  
   return (
     <div className="h-full">
       <Navbar search={false} />
@@ -92,7 +91,7 @@ export default function Checkout(){
           <h1 className="text-lg">Shipping Details</h1>
 
           <div>Address</div>
-          <input placeholder="address" value={address} onChange={(event) => setAddress(event.target.value)} />
+          <input placeholder="address" value={address} onChange={(event) => setAddress(event.target.value)} className="border rounded-lg px-2"  />
 
           <div className="flex w-full justify-between">
               <div>

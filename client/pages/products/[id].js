@@ -11,6 +11,7 @@ function Product() {
   const [product, setProduct] = useState()
   const [errorMessage, setErrorMessage] = useState('')
   const [addedToCart, setAddedToCart] = useState(false)
+  const [review, setReview] = useState('')
   const { shoppingCart, setShoppingCart } = useContext(AuthContext) 
   const router = useRouter()
   const { id } = router.query
@@ -73,6 +74,28 @@ function Product() {
     setAddedToCart(true)
   }
 
+  const addReview = async () => {
+    if (!review){
+      setErrorMessage('Error: Need to provide review text')
+      return
+    }
+    const response = await fetch(`${SERVER_URL}/v1/products/${id}/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: review,
+        score: 3
+      })
+    })
+
+    const data = await response.json()
+    setReview('')
+    setErrorMessage('')
+    setProduct(data.review)
+  }
+
   return (
     <div>
       <Navbar search={false} />
@@ -126,6 +149,10 @@ function Product() {
                 {product.quantity > 0 ? 'Available' : 'Out of stock'}
               </div>
             </div>
+            <div className='text-red-500 font-medium'>
+              {errorMessage ? errorMessage : ''}
+            </div>
+           
             <div className='flex'>
               <button
                 className={addedToCart ? 'text-gray-500 mt-20' : 'text-black mt-20'}
@@ -154,12 +181,22 @@ function Product() {
                 </Link>
               </div>
             )}
+
+            <div className='flex flex-col mt-5'>
+              <textarea className='border rounded-lg' value={review} onChange={(event) => setReview(event.target.value)} />
+              <button className='bg-orange-700 text-white px-4 py-2 rounded-lg mt-5' onClick={addReview}>
+                Add Review
+              </button>
+            </div>
+            
           </div>
         </div>
       </div>
 
       <div className='xl:mx-20 mx:10'>
-        {product.reviews.map(review => <div key={review._id}>REVIEW</div>)}
+        {product.reviews.map(review => <div key={review._id}>
+          Review: {review.text}, {review.reviewDate.substr(0,10)}
+        </div>)}
       </div>
     </div>
   )

@@ -83,7 +83,7 @@ const createReview = async (req: Request, res: Response) => {
             })
         }
         
-        await ProductModel.findByIdAndUpdate(id, {
+        const review = await ProductModel.findByIdAndUpdate(id, {
             $push: {
                 reviews: {
                     text,
@@ -92,7 +92,7 @@ const createReview = async (req: Request, res: Response) => {
                     name
                 }
             }
-        })
+        }, {upsert: true})
 
         await UserModel.findByIdAndUpdate(id, {
             $push: {
@@ -105,6 +105,8 @@ const createReview = async (req: Request, res: Response) => {
         })
         return res.status(201).json({
             message: `Successfully created review for product ${id}`,
+            review: review?.toObject(),
+            works: ''
         })
     } catch (error){
         console.log(error)

@@ -5,8 +5,8 @@ export default function OrderSuccess(){
         <div>
             <Navbar />
             
-            <div>
-                Order Success
+            <div className="text-5xl font-bold justify-center flex mt-40">
+                Order Successfully Completed
             </div>
         </div>
     )
