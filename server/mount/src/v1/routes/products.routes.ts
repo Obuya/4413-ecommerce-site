@@ -13,6 +13,13 @@ const router = express.Router()
 router.get('/', controller.getProducts)
 
 /**
+ * @route /v1/products/purchased
+ * @request GET
+ * @description Get all purchased products
+ */
+router.get('/purchased', checkJwt, authenticateJwt, controller.purchasedProducts)
+
+/**
  * @route /v1/products/:id
  * @request GET
  * @description Get specific products information

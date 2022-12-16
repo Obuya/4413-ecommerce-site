@@ -65,6 +65,7 @@ const verifyUserLogin = async (req: Request, res: Response) => {
         const user = await UserModel.findOne({
             username: username
         })
+
         if (!user){
             return res.status(404).json({
                 message: 'Error: invalid username or password'
@@ -76,11 +77,10 @@ const verifyUserLogin = async (req: Request, res: Response) => {
                 message: 'Error: invalid username or password'
             })
         }
-        const token = generateAuthToken(user.id, username, 'user')
+        const token = generateAuthToken(user.id, username, user.role || 'user')
         //req.session.jwt = token
        // remove hash from user to safely return user object
        const { hash, ...userWithoutHash } = user.toObject()
-       
        
        return res.status(200).json({
         message: 'Succesfully logged in',

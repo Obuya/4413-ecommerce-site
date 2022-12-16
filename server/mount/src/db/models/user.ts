@@ -8,12 +8,14 @@ export interface User {
     hash: string,
     reviews: Review[],
     purchases: Product[],
+    sold?: Product[]
     address?: string,
     name?: string,
     cardNumber?: number,
     city?: string,
     country?: string,
     postalcode?: string,
+    role?: string
 }
 
 const userSchema = new Schema<User>({
@@ -24,10 +26,12 @@ const userSchema = new Schema<User>({
     hash: String,
     reviews: [reviewSchema],
     purchases: [productSchema],
+    sold: [productSchema],
     address: String,
     city: String,
     country: String,
-    postalcode: String
+    postalcode: String,
+    role: String
 })
 
 const UserModel = model<User>('User', userSchema)

@@ -83,7 +83,7 @@ const createReview = async (req: Request, res: Response) => {
             })
         }
         
-        await ProductModel.findByIdAndUpdate(id, {
+        const review = await ProductModel.findByIdAndUpdate(id, {
             $push: {
                 reviews: {
                     text,
@@ -92,7 +92,7 @@ const createReview = async (req: Request, res: Response) => {
                     name
                 }
             }
-        })
+        }, {upsert: true})
 
         await UserModel.findByIdAndUpdate(id, {
             $push: {
@@ -105,9 +105,31 @@ const createReview = async (req: Request, res: Response) => {
         })
         return res.status(201).json({
             message: `Successfully created review for product ${id}`,
+            review: review?.toObject(),
+            works: ''
         })
     } catch (error){
         console.log(error)
+        return res.status(500).json({
+            message: 'Error: Internal Server Error'
+        })
+    }
+}
+
+const purchasedProducts = async (req: Request, res: Response) => {
+    const user = req.user
+    try {
+        if (!user || user.type !== 'admin') return res.status(400).json({
+            message: 'Error: user is not of type "admin"'
+        })
+
+        //const purchasedProducts = 
+        return res.status(200).json({
+            message: ''
+        })
+    }
+    catch (err){
+        console.log(err)
         return res.status(500).json({
             message: 'Error: Internal Server Error'
         })
@@ -118,5 +140,6 @@ module.exports = {
     getProducts,
     getOneProduct,
     createProduct,
-    createReview
+    createReview,
+    purchasedProducts
 }

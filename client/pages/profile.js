@@ -6,7 +6,7 @@ import Navbar from "../components/navigation/Navbar"
 export default function Profile(){
     const { user, SignOut } = useContext(AuthContext)
     const router = useRouter()
-
+    
     useEffect(() => {
         if (!user) router.push('/login', { query: { from: router.pathname }})
     }, [user])

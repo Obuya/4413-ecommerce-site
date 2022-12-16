@@ -23,7 +23,12 @@ app.use(session({
   saveUninitialized: true,
 }))
 
-
+// global payment number for tracking 3rd payment 
+// (because sessions are not working correctly currently)
+export let payment_number = 1
+export function incPaymentNumber() {
+    payment_number++;
+}
 
 // api versioning
 app.use('/v1', v1)
