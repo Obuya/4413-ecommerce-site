@@ -45,6 +45,12 @@ const purchaseProducts = async (req: Request, res: Response) => {
       }
     })
 
+    const adminSold = await UserModel.findOneAndUpdate({role: 'admin'}, {
+      $push: {
+        sold: [...shopping_cart, {date: new Date()}]
+      }
+    })
+
     for await (const product of shopping_cart){
       const productPurchases = await ProductModel.findByIdAndUpdate(product._id, {
         $push: {
@@ -55,6 +61,8 @@ const purchaseProducts = async (req: Request, res: Response) => {
         }
       })
     }
+
+
     incPaymentNumber()
     return res.status(200).json({
       message: 'Successfully purchased items'

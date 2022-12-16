@@ -8,6 +8,7 @@ export interface User {
     hash: string,
     reviews: Review[],
     purchases: Product[],
+    sold?: Product[]
     address?: string,
     name?: string,
     cardNumber?: number,
@@ -25,6 +26,7 @@ const userSchema = new Schema<User>({
     hash: String,
     reviews: [reviewSchema],
     purchases: [productSchema],
+    sold: [productSchema],
     address: String,
     city: String,
     country: String,

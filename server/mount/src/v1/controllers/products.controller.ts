@@ -116,9 +116,30 @@ const createReview = async (req: Request, res: Response) => {
     }
 }
 
+const purchasedProducts = async (req: Request, res: Response) => {
+    const user = req.user
+    try {
+        if (!user || user.type !== 'admin') return res.status(400).json({
+            message: 'Error: user is not of type "admin"'
+        })
+
+        //const purchasedProducts = 
+        return res.status(200).json({
+            message: ''
+        })
+    }
+    catch (err){
+        console.log(err)
+        return res.status(500).json({
+            message: 'Error: Internal Server Error'
+        })
+    }
+}
+
 module.exports = {
     getProducts,
     getOneProduct,
     createProduct,
-    createReview
+    createReview,
+    purchasedProducts
 }

@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { AuthContext } from "../contexts/AuthContext"
 import Link from 'next/link'
 import Navbar from "../components/navigation/Navbar"
+import Reports from "../components/reports/Reports"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -48,13 +49,15 @@ export default function Login(){
     }
   }
 
-  console.log('USER:', user)
   if (user && user.type !== 'admin') router.push('/login')
   
   return (
     <div>
         {user && user.type === 'admin' ? (
-            <div>HIDDEN ADMIN PAGE</div>
+            <div>
+                <Navbar loginAndCart={false} search={false} />
+                <Reports />
+            </div>
         ) : (
             <div className="h-screen bg-gradient-to-r transition-all duration-500 from-pink-500 to-yellow-500">
             <Navbar search={false} loginAndCart={false} />
