@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react'
 import Navbar from '../../components/navigation/Navbar'
 import Link from 'next/link'
 import { AuthContext } from '../../contexts/AuthContext'
+import Carousel from './Carousel'
+import CommentBox from './commentBox'
 
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
@@ -12,6 +14,7 @@ function Product() {
   const [errorMessage, setErrorMessage] = useState('')
   const [addedToCart, setAddedToCart] = useState(false)
   const [review, setReview] = useState('')
+  const [reviews, setReviews] = useState('')
   const { shoppingCart, setShoppingCart } = useContext(AuthContext) 
   const router = useRouter()
   const { id } = router.query
@@ -28,6 +31,7 @@ function Product() {
         return
       }
       setProduct(data)
+      setReviews(data.reviews)
     }
     if (id) getProductDetails()
   }, [id])
@@ -39,6 +43,7 @@ function Product() {
       </div>
     )
   }
+
 
 
   const addItemToShoppingCart = async () => {
@@ -95,7 +100,15 @@ function Product() {
     router.reload(window.location.pathname)
     setErrorMessage('')
     setProduct(data.review)
+    console.log(data.review.reviews)
+    setReviews([...data.review.reviews,
+      {
+      text: review,
+      score: '3',
+      reviewDate: new Date() +""
+    }])
   }
+ 
 
   return (
     <div>
@@ -119,9 +132,9 @@ function Product() {
         <div className='flex w-1/2 gap-x-5'>
           <div className='flex flex-col gap-y-5'>
           </div>
-          <div className='w-full h-[400px] bg-white-100'>
-
-          <img src = {product.imageURLs[0]} className="object-contain w-full h-[400px]"/>
+          <div className="w-fit flex justify-center">
+            
+          <Carousel  images = {product.imageURLs}/>
 
           </div>
         </div>
@@ -195,8 +208,8 @@ function Product() {
       </div>
 
       <div className='xl:mx-20 mx:10'>
-        {product.reviews.map(review => <div key={review._id}>
-          Review: {review.text}, {review.reviewDate.substr(0,10)}
+        {reviews.map(review => <div key={review._id}>
+          <CommentBox text = {review.text} date  = {review.reviewDate.substr(0,10)}/>
         </div>)}
       </div>
     </div>
