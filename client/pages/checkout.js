@@ -59,7 +59,7 @@ export default function Checkout(){
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        id: user.id,
+        id: user.id || user._id,
         shopping_cart: shoppingCart,
         address,
         name,

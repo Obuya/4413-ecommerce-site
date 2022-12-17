@@ -17,7 +17,7 @@ export default function Profile(){
             <Navbar search={false} />
             <h1>Hidden User Profile</h1>
             <div>Username: ${user.username}</div>
-            <div>user id: ${user.id}</div>
+            <div>user id: ${user.id || user._id}</div>
             <button onClick={SignOut} className='border'>Sign Out</button>
         </div>
     )

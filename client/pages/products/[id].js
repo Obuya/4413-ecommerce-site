@@ -92,6 +92,7 @@ function Product() {
 
     const data = await response.json()
     setReview('')
+    router.reload(window.location.pathname)
     setErrorMessage('')
     setProduct(data.review)
   }

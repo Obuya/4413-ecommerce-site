@@ -41,6 +41,7 @@ export default function Login(){
         return
       }
       sessionStorage.setItem('jwt', data.token)
+      console.log('USER TEST:', data)
       setUser(data.user)
     } catch (error){
       console.log(error)
@@ -48,6 +49,7 @@ export default function Login(){
     }
   }
 
+  console.log(user)
     useEffect(() => {
       if (user){
         const { from } = router.query
