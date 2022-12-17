@@ -27,9 +27,11 @@ function Reports(){
 
     return (
         <div>
+            <h1 className="text-2xl text-center">Admin Reports</h1>
+            <h1 className="text-lg px-10">Items Sold</h1>
             {
                 profile && profile.sold && (
-                    profile.sold.map(product => (
+                    profile.sold.filter(p => p.name).map(product => (
                     <div className="m-5" key={product.id}>
                         <div>Product Name: {product.name}</div>
                         <div>Quantity: {product.quantity}</div>
