@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import Navbar from '../../components/navigation/Navbar'
 import Link from 'next/link'
 import { AuthContext } from '../../contexts/AuthContext'
-import Carousel from './Carousel'
+import Carousel from './carousel'
 import CommentBox from './commentBox'
 
 
@@ -133,8 +133,8 @@ function Product() {
           <div className='flex flex-col gap-y-5'>
           </div>
           <div className="w-fit flex justify-center">
-            
-          {/* <Carousel  images = {product.imageURLs} /> */}
+
+           {product != null && <Carousel  images = {product.imageURLs} />}   
 
           </div>
         </div>
