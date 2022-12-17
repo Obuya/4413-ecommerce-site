@@ -25,6 +25,12 @@ This project is an online store web application for a convenience company. The a
 <img width="1727" alt="Screenshot 2022-12-16 at 7 54 26 PM" src="https://user-images.githubusercontent.com/43126781/208214572-0d85f1ef-5b21-4acb-8454-adf09892eb90.png">
 
 
+<img width="1727" alt="Screenshot 2022-12-16 at 7 53 37 PM" src="https://user-images.githubusercontent.com/43126781/208214652-e02f6417-8b39-481b-96c4-5b85ef45784a.png">
+
+
+
+<img width="1727" alt="Screenshot 2022-12-16 at 7 58 46 PM 1" src="https://user-images.githubusercontent.com/43126781/208214734-b06def3e-f73f-4054-ac10-93a91ffe9bfc.png">
+
 ## Technologies
 
 - The frontend of the web application will be built using HTML, CSS, and JavaScript.
