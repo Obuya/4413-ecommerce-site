@@ -134,7 +134,7 @@ function Product() {
           </div>
           <div className="w-fit flex justify-center">
             
-          <Carousel  images = {product.imageURLs}/>
+          {/* <Carousel  images = {product.imageURLs} /> */}
 
           </div>
         </div>

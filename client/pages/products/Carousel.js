@@ -6,7 +6,8 @@ const Carousel = ({images}) => {
   // We are using react ref to 'tag' each of the images. Below will create an array of
   // objects with numbered keys. We will use those numbers (i) later to access a ref of a
   // specific image in this array.
-  const refs = images && images.reduce((acc, val, i) => {
+  if(!images) return
+  const refs = images.reduce((acc, val, i) => {
     acc[i] = createRef();
     return acc;
   }, {});
