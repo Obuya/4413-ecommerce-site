@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import dotenv from "dotenv"
 import cors from 'cors'
 import connectDB from './db/connection'
@@ -32,6 +32,12 @@ export function incPaymentNumber() {
 
 // api versioning
 app.use('/v1', v1)
+
+app.get('/', (req: Request, res: Response) =>{
+  return res.status(200).json({
+    message: 'Welcome to 4413 Ecommerce API'
+  })
+})
 
 
 // TODO error handling
