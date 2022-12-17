@@ -29,7 +29,7 @@ const Carousel = ({images}) => {
   };
 
   // Some validation for checking the array length could be added if needed
-  const totalImages = images.length;
+  const totalImages = images && images.length;
 
   
   // Below functions will assure that after last image we'll scroll back to the start,
@@ -80,7 +80,7 @@ const Carousel = ({images}) => {
       <div className="relative w-fit">
         <div className="w-fit overflow-x-hidden inline-flex">
           {sliderControl(true)}
-          {images.map((img, i) => (
+          {images && images.map((img, i) => (
             <div className="w-full flex-shrink-0" key={img} ref={refs[i]}>
               <img src={img} className="w-full max-h-96 object-contain" />
             </div>
