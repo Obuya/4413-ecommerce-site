@@ -14,6 +14,17 @@ This project is an online store web application for a convenience company. The a
 - Administrators can add, update, and remove products from the store
 - Administrators can view and manage customer orders
 
+<img width="1727" alt="Screenshot 2022-12-16 at 7 53 05 PM" src="https://user-images.githubusercontent.com/43126781/208214548-8d6cc8cd-477c-4982-bd92-be375098b268.png">
+
+<img width="1727" alt="Screenshot 2022-12-16 at 7 53 20 PM" src="https://user-images.githubusercontent.com/43126781/208214555-ace2c518-4bd4-4b78-ae40-d0df6d4daa3b.png">
+
+<img width="1727" alt="Screenshot 2022-12-16 at 7 53 50 PM" src="https://user-images.githubusercontent.com/43126781/208214561-80af1a81-dea5-44af-bde1-89d32047291b.png">
+
+<img width="1727" alt="Screenshot 2022-12-16 at 7 54 18 PM" src="https://user-images.githubusercontent.com/43126781/208214567-fc3e6083-f2f0-4fda-9168-a3d94c697c21.png">
+
+<img width="1727" alt="Screenshot 2022-12-16 at 7 54 26 PM" src="https://user-images.githubusercontent.com/43126781/208214572-0d85f1ef-5b21-4acb-8454-adf09892eb90.png">
+
+
 ## Technologies
 
 - The frontend of the web application will be built using HTML, CSS, and JavaScript.
