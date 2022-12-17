@@ -31,6 +31,7 @@ const Carousel = ({images}) => {
   // Some validation for checking the array length could be added if needed
   const totalImages = images.length;
 
+  
   // Below functions will assure that after last image we'll scroll back to the start,
   // or another way round - first to last in previousImage method.
   const nextImage = () => {
